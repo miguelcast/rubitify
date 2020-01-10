@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../Shared';
 
@@ -11,7 +12,9 @@ const HeaderStyled = styled.header`
 
 const Header = () => (
   <HeaderStyled>
-    <img src="/images/logo.png" alt="Rubitify" width={100}/>
+    <Link to="/">
+      <img src="/images/logo.png" alt="Rubitify" width={100}/>
+    </Link>
     <Button type="button">Random</Button>
   </HeaderStyled>
 );

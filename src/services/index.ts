@@ -4,7 +4,7 @@ const paths = {
   genres: '/genres',
   artists: '/artists',
   artistAlbums: '/artists/:id/albums',
-  albumSongs: '/artists/:id/albums',
+  albumSongs: '/albums/:id/songs',
   genresRandom: '/genres/:genre/random_song'
 };
 

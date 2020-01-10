@@ -2,6 +2,7 @@ import { lazy } from 'react';
 
 const Home = lazy(() => import('../pages/Home'));
 const Albums = lazy(() => import('../pages/Albums'));
+const Songs = lazy(() => import('../pages/Songs'));
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
   {
     path: '/artist/:artistId/albums',
     component: Albums,
+    exact: true
+  },
+  {
+    path: '/album/:albumId/songs',
+    component: Songs,
     exact: true
   }
 ];

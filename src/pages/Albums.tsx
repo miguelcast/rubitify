@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { artistAlbums as artistAlbumsService } from "../services";
+import { useParams, useHistory, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { List } from '../components/Shared';
 import Card from '../components/Card';
+import { RootState } from '../store/rootReducer';
+import { fetchAlbums } from '../store/albums/albumsSlice';
 
 interface Params {
   artistId?: string;
 }
 
-interface Album {
-  id: number;
-  name: string;
-  image: string;
-  total_tracks: number;
-}
-
-const Albums = () => {
+function useAlbums() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { artistId = null } = useParams<Params>();
-  const [albums, setAlbums] = useState<Array<Album>>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const albums = useSelector(
+    (state: RootState) => state.albums
+  );
 
   useEffect(() => {
     async function init() {
       if (!artistId) history.push('/');
-      const response = await artistAlbumsService(artistId || 0);
-      const artistsData = response.data.data;
-      setAlbums(artistsData);
+      await dispatch(fetchAlbums(artistId || 0));
       setLoading(false);
     }
     init();
-  }, [artistId, history]);
+  }, [artistId, dispatch, history]);
+
+  return { loading, albums };
+}
+
+const Albums = () => {
+  const { loading, albums } = useAlbums();
 
   return (
     <div>
@@ -38,12 +41,13 @@ const Albums = () => {
       {loading && <div>Loading...</div>}
       <List>
         {albums.map(album => (
-          <Card
-            key={album.id}
-            title={album.name}
-            image={album.image}
-            subtitle={`Songs ${album.total_tracks}`}
-          />
+          <Link key={album.id} to={`/album/${album.id}/songs`}>
+            <Card
+              title={album.name}
+              image={album.image}
+              subtitle={`Songs ${album.total_tracks}`}
+            />
+          </Link>
         ))}
       </List>
     </div>

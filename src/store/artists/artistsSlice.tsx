@@ -18,21 +18,22 @@ const artistsSlice = createSlice({
     artistsSuccess(state, action: PayloadAction<Artist[]>) {
       return action.payload;
     },
-    artistsError() {
+    artistsClear() {
       return [];
     }
   }
 });
 
-export const { artistsSuccess, artistsError } = artistsSlice.actions;
+export const { artistsSuccess, artistsClear } = artistsSlice.actions;
 
 export default artistsSlice.reducer;
 
 export const fetchArtists = (): AppThunk => async dispatch => {
+  dispatch(artistsClear());
   try {
     const response = await artistsService();
     dispatch(artistsSuccess(response.data.data));
   } catch (e) {
-    dispatch(artistsError());
+    console.log('Error artist');
   }
 };
