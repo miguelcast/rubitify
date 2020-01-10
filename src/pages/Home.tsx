@@ -1,101 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import styled, { css } from "styled-components";
-// @ts-ignore
-import ImgSuspense from 'img-suspense';
-import { artists as artistsService } from "../services";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 
-const List = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-`;
+import { List } from '../components/Shared';
+import Card from '../components/Card';
+import { RootState } from '../store/rootReducer';
+import { fetchArtists } from '../store/artists/artistsSlice';
 
-const CardItem = styled.div`
-  width: 125px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem;
-
-  span {
-    overflow: hidden;
-    font-size: 0.8rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 110px;
-    text-align: center;
-  }
-  
-  &:hover {
-    img {
-      filter: blur(3px) brightness(50%);
-    }
-    &:after {
-      content: '';
-      background-image: url("/images/eye.png");
-      position: absolute;
-      top: 60px;
-      left: 50%;
-      width: 32px;
-      height: 32px;
-      text-align: center;
-      transform: translate(-50%, -50%);
-    }
-  }
-`;
-
-const BaseImage = css`
-  margin-bottom: 8px;
-  width: 120px;
-  height: 120px;
-  overflow: hidden;
-  border-radius: 50%;
-`;
-
-const RoundFallBack = styled.div`
-  ${BaseImage};
-  box-shadow: 0 1px 4px black inset;
-  background-image: linear-gradient(to right, #131a22, #0d1217);;
-`;
-
-const RoundImage = styled(ImgSuspense)`
-  ${BaseImage};
-  object-fit: cover;
-  object-position: center;
-`;
-
-interface Artist {
-  id: number;
-  name: string;
-  image: string;
-}
-
-const Home = () => {
-  const [artists, setArtists] = useState<Array<Artist>>([]);
+function useArtists() {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState<boolean>(true);
+  const artists = useSelector(
+    (state: RootState) => state.artists
+  );
 
   useEffect(() => {
     async function init() {
-      const responseArtists = await artistsService();
-      const artistsData = responseArtists.data.data;
-      setArtists(artistsData);
+      await dispatch(fetchArtists());
+      setLoading(false);
     }
     init();
-  }, []);
+  }, [dispatch]);
+
+  return { loading, artists };
+}
+
+const Home = () => {
+  const { artists, loading } = useArtists();
 
   return (
     <section>
-      <h2>Artists ({artists.length})</h2>
+      <h2>Artists ({loading ? '...' : artists.length})</h2>
+      {loading && <div>Loading...</div>}
       <List>
-        {artists.map((artist: Artist) => (
-          <CardItem key={artist.id}>
-            <RoundImage
-              src={artist.image}
-              alt={artist.name}
-              fallback={<RoundFallBack />}
-              onError={() => console.log('Error loading image.')}
-            />
-            <span title={artist.name}>{artist.name}</span>
-          </CardItem>
+        {artists.map(artist => (
+          <Link key={artist.id} to={`/artist/${artist.id}/albums`}>
+            <Card title={artist.name} image={artist.image} />
+          </Link>
         ))}
       </List>
     </section>

@@ -12,10 +12,10 @@ export const genres = () => instance.get(paths.genres);
 
 export const artists = () => instance.get(paths.artists);
 
-export const artistAlbums = (artistId: number) =>
+export const artistAlbums = (artistId: number | string) =>
   instance.get(paths.artistAlbums.replace(':id', artistId.toString()));
 
-export const albumSongs = (albumId: number) =>
+export const albumSongs = (albumId: number | string) =>
   instance.get(paths.albumSongs.replace(':id', albumId.toString()));
 
 export const genresRandom = (genreName: string) =>

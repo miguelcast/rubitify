@@ -10,7 +10,7 @@ const routes = [
     exact: true
   },
   {
-    path: '/albums',
+    path: '/artist/:artistId/albums',
     component: Albums,
     exact: true
   }

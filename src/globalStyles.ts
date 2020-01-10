@@ -20,6 +20,7 @@ export const GlobalStyle = createGlobalStyle`
   
   a, a:active, a:visited {
     color: #ebebeb;
+    text-decoration: none;
   }
   
   header {

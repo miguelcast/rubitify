@@ -1,15 +1,14 @@
-import { createStore, combineReducers } from 'redux';
+import { configureStore, Action } from '@reduxjs/toolkit';
+import { ThunkAction } from 'redux-thunk';
 
-const textReducer = (state: string = '', action: { type: string, payload: string }): string => state;
+import rootReducer, { RootState } from './rootReducer';
 
-const rootReducers = combineReducers({
-  text: textReducer
+const store = configureStore({
+  reducer: rootReducer
 });
 
-export type AppState = ReturnType<typeof rootReducers>
+export type AppDispatch = typeof store.dispatch;
 
-const initialState = {};
-
-const store = createStore(rootReducers, initialState);
+export type AppThunk = ThunkAction<void, RootState, null, Action<string>>
 
 export default store;

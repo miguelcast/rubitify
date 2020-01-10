@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
 import routes from './config/routes'
 import store from './store'
 import { GlobalStyle } from './globalStyles';
@@ -17,7 +18,12 @@ const App = () => {
           <Switch>
             <Suspense fallback={<div>Loading...</div>}>
               {routes.map(route => (
-                <Route exact={route.exact} path={route.path} component={route.component} />
+                <Route
+                  key={route.path}
+                  exact={route.exact}
+                  path={route.path}
+                  component={route.component}
+                />
               ))}
             </Suspense>
           </Switch>
