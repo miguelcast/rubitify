@@ -22,8 +22,4 @@ export const GlobalStyle = createGlobalStyle`
     color: #ebebeb;
     text-decoration: none;
   }
-  
-  header {
-    background-color: #1a1b27;
-  }
 `;

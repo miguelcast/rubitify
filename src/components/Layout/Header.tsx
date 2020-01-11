@@ -8,6 +8,7 @@ const HeaderStyled = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  background-color: #1a1b27;
 `;
 
 const Header = () => (

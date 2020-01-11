@@ -1,6 +1,7 @@
+import React from 'react';
 import { RoundFallBack, RoundImage } from "./RoundImage";
 import WrapperCard from './WrapperCard';
-import React from "react";
+import Text from './Text';
 
 interface Props {
   image: string;
@@ -17,9 +18,9 @@ const Card = ({ image, title, subtitle  }: Props) => {
         fallback={<RoundFallBack />}
         onError={() => console.log('Error loading image.')}
       />
-      <em title={title}>{title}</em>
+      <Text as="em" title={title}>{title}</Text>
       {subtitle && (
-        <span title={subtitle}>{subtitle}</span>
+        <Text title={subtitle}>{subtitle}</Text>
       )}
     </WrapperCard>
   );

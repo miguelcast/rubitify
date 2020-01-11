@@ -1,33 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 
 import { RootState } from '../store/rootReducer';
 import { fetchSongs } from '../store/songs/songsSlice';
-import { msToTime } from '../utils/converters';
-
-const SongItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 0.8rem;
-  
-  * {
-    display: inline-block;
-  }
-  
-  img {
-    filter: brightness(0);
-    margin-right: 0.8rem;
-  }
-  
-  &:hover {
-    img {
-      filter: brightness(100);
-    }
-  }
-`;
+import Song from "../components/Song";
 
 interface Params {
   albumId?: string;
@@ -62,11 +39,7 @@ const Songs = () => {
       <h2>Songs ({loading ? '...' : songs.length})</h2>
       {loading && <div>Loading...</div>}
       {songs.map(song => (
-        <SongItem key={song.id}>
-          <img src="/images/play-active.png" alt="Play"/>
-          <strong>{song.name}</strong>
-          <span>{msToTime(parseInt(song.duration_ms.toString()))}</span>
-        </SongItem>
+        <Song key={song.id} title={song.name} duration={song.duration_ms} url={song.spotify_url} />
       ))}
     </div>
   );

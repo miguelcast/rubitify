@@ -7,17 +7,6 @@ const WrapperCard = styled.div`
   align-items: center;
   margin: 1rem;
   cursor: pointer;
-
-  em,
-  span {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 110px;
-    font-size: 0.8rem;
-    font-style: normal;
-    text-overflow: ellipsis;
-    text-align: center;
-  }
   
   &:hover,
   &:focus {
