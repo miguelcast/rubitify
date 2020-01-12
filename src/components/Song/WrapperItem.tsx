@@ -19,18 +19,24 @@ const WrapperItem = styled.div<WrapperProps>`
     flex-direction: column;
     overflow: hidden;
   }
-  
+
   img {
     filter: opacity(${({ isActive }) => isActive ? '1' : '0.4'})
             grayscale(${({ hasPreview }) => hasPreview ? '0' : '1'});
     margin-right: 0.8rem;
     transition: all 100ms ease-in-out;
   }
-  
+
   a {
     align-self: flex-end;
   }
-  
+
+  .message {
+    margin-right: 4px;
+    font-size: 0.6rem;
+    color: salmon;
+  }
+
   &:hover {
     img {
       filter: opacity(1);

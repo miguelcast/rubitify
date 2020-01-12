@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Song } from '../songs/songsSlice';
+import { PLAYER_STATUS } from '../../config/types';
 
 interface InitialState {
-  status?: 'playing' | 'pause' | 'stopped' | null;
+  status?: PLAYER_STATUS;
   current?: Song | null;
 }
 
@@ -19,12 +20,25 @@ const playerSlice = createSlice({
     setCurrent(state, action: PayloadAction<Song>) {
       return {
         ...state,
-        current: action.payload
+        current: action.payload,
+        status: 'playing'
+      }
+    },
+    pauseCurrent(state) {
+      return {
+        ...state,
+        status: 'paused'
+      }
+    },
+    playCurrent(state) {
+      return {
+        ...state,
+        status: 'playing'
       }
     }
   }
 });
 
-export const { setCurrent } = playerSlice.actions;
+export const { setCurrent, playCurrent, pauseCurrent } = playerSlice.actions;
 
 export default playerSlice.reducer;

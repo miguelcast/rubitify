@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, memo } from 'react';
 
 import { IMAGE_PAUSE, IMAGE_PLAY } from '../../config/constants';
 import WrapperItem from './WrapperItem';
@@ -33,7 +33,7 @@ const Song = ({
       </Suspense>
     </div>
     {isFixed && !hasPreview && (
-      <div>The song has no preview</div>
+      <span className="message">The song has no<br />preview</span>
     )}
     <a href={url} target="_blank" rel="noopener noreferrer">
       <img src={image} alt="Listen"/>
@@ -41,4 +41,4 @@ const Song = ({
   </WrapperItem>
 );
 
-export default Song;
+export default memo(Song);

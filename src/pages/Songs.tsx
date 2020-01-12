@@ -36,6 +36,7 @@ const Songs = () => {
   const dispatch = useDispatch();
   const { loading, songs } = useSongs(dispatch);
   const currentSongId = useSelector((state: RootState) => state.player.current?.id);
+  const status = useSelector((state: RootState) => state.player.status);
   const setCurrentSong = useCallback(song => dispatch(setCurrent(song)), [dispatch]);
 
   return (
@@ -45,7 +46,7 @@ const Songs = () => {
       {songs.map(song => (
         <Song
           key={song.id}
-          isActive={song.id === currentSongId && Boolean(song.preview_url)}
+          isActive={song.id === currentSongId && status === 'playing' && Boolean(song.preview_url)}
           title={song.name}
           duration={song.duration_ms}
           url={song.spotify_url}
