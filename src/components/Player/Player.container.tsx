@@ -5,14 +5,24 @@ import Player from './Player';
 import { RootState } from '../../store/rootReducer';
 
 const PlayerContainer = () => {
-  const song = useSelector((state: RootState) => state.songs.current);
+  const currentSong = useSelector((state: RootState) => state.player.current);
 
-  if (!song) {
+  if (!currentSong) {
     return null;
   }
 
   return (
-    <Player song={song} />
+    <>
+      {Boolean(currentSong.preview_url) && (
+        <audio
+          autoPlay
+          src={currentSong.preview_url}>
+          Your browser does not support the
+          <code>audio</code> element.
+        </audio>
+      )}
+      <Player song={currentSong} />
+    </>
   );
 };
 

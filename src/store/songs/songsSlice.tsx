@@ -14,12 +14,10 @@ export interface Song {
 
 interface InitialState {
   songs: Song[];
-  current?: Song | null;
 }
 
 const initialState: InitialState = {
-  songs: [],
-  current: null
+  songs: []
 };
 
 const songsSlice = createSlice({
@@ -37,17 +35,11 @@ const songsSlice = createSlice({
         ...state,
         songs: []
       };
-    },
-    setCurrent(state, action: PayloadAction<Song>) {
-      return {
-        ...state,
-        current: action.payload
-      }
     }
   }
 });
 
-export const { songsClear, songsSuccess, setCurrent } = songsSlice.actions;
+export const { songsClear, songsSuccess } = songsSlice.actions;
 
 export default songsSlice.reducer;
 

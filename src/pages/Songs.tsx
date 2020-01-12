@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchSongs, setCurrent } from '../store/songs/songsSlice';
+import { fetchSongs } from '../store/songs/songsSlice';
+import { setCurrent } from '../store/player/playerSlice';
 import Song from '../components/Song';
 import { AppDispatch } from '../store';
 import { RootState } from '../store/rootReducer';
@@ -34,6 +35,7 @@ function useSongs(dispatch: AppDispatch) {
 const Songs = () => {
   const dispatch = useDispatch();
   const { loading, songs } = useSongs(dispatch);
+  const currentSongId = useSelector((state: RootState) => state.player.current?.id);
   const setCurrentSong = useCallback(song => dispatch(setCurrent(song)), [dispatch]);
 
   return (
@@ -43,10 +45,12 @@ const Songs = () => {
       {songs.map(song => (
         <Song
           key={song.id}
+          isActive={song.id === currentSongId && Boolean(song.preview_url)}
           title={song.name}
           duration={song.duration_ms}
           url={song.spotify_url}
           onClick={() => setCurrentSong(song)}
+          hasPreview={Boolean(song.preview_url)}
         />
       ))}
     </div>

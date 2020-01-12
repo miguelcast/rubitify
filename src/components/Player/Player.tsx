@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Song as ISong } from '../../store/songs/songsSlice';
 import Song from '../Song';
+import { Song as ISong } from '../../store/songs/songsSlice';
+import { THEME_LIGHT } from '../../config/constants';
 
 const PlayerWrapper = styled.div`
   position: fixed;
@@ -20,13 +21,14 @@ interface Props {
 const Player = ({ song }: Props) => (
   <PlayerWrapper>
     <Song
-      isActive
+      isActive={Boolean(song.preview_url)}
       isFixed
-      theme="light"
+      theme={THEME_LIGHT}
       title={song.name}
       duration={song.duration_ms}
       url={song.spotify_url}
       onClick={() => console.log('Current')}
+      hasPreview={Boolean(song.preview_url)}
     />
   </PlayerWrapper>
 );

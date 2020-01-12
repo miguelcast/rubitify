@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
-interface Props {
-  theme: 'light' | 'dark';
-}
+import { ThemeProps } from './types';
+import { THEME_LIGHT } from '../../config/constants';
 
-const Title = styled.strong<Props>`
+const Title = styled.strong<ThemeProps>`
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
@@ -12,7 +11,7 @@ const Title = styled.strong<Props>`
 
   font-size: 0.9rem;
   font-weight: 100;
-  ${({ theme }) => theme === 'light' && 'color: #3d4145'};
+  ${({ theme }) => theme === THEME_LIGHT && 'color: #3d4145'};
 `;
 
 export default Title;

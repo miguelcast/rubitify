@@ -1,19 +1,16 @@
 import styled from 'styled-components';
 
-interface Props {
-  readonly isActive: boolean;
-  readonly isFixed: boolean;
-  readonly theme: 'light' | 'dark';
-}
+import { WrapperProps } from './types';
+import { THEME_LIGHT } from '../../config/constants';
 
-const WrapperItem = styled.div<Props>`
+const WrapperItem = styled.div<WrapperProps>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   border-radius: ${({ isFixed }) => isFixed ? '8px 8px 0 0' : '8px'};
   padding: 8px 12px;
   margin-bottom: ${({ isFixed }) => isFixed ? '0' : '0.8rem'};
-  background-color: ${({ theme }) => theme === 'light' ? 'white' : '#1a1b27'};
+  background-color: ${({ theme }) => theme === THEME_LIGHT ? 'white' : '#1a1b27'};
   cursor: pointer;
   
   & > div {
@@ -24,7 +21,8 @@ const WrapperItem = styled.div<Props>`
   }
   
   img {
-    filter: opacity(${({ isActive }) => isActive ? '1' : '0.2'});
+    filter: opacity(${({ isActive }) => isActive ? '1' : '0.4'})
+            grayscale(${({ hasPreview }) => hasPreview ? '0' : '1'});
     margin-right: 0.8rem;
     transition: all 100ms ease-in-out;
   }
