@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 
-const WrapperItem = styled.div`
+interface Props {
+  readonly isActive: boolean;
+  readonly isFixed: boolean;
+  readonly theme: 'light' | 'dark';
+}
+
+const WrapperItem = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  border-radius: 8px;
+  border-radius: ${({ isFixed }) => isFixed ? '8px 8px 0 0' : '8px'};
   padding: 8px 12px;
-  margin-bottom: 0.8rem;
-  background-color: #1a1b27;
+  margin-bottom: ${({ isFixed }) => isFixed ? '0' : '0.8rem'};
+  background-color: ${({ theme }) => theme === 'light' ? 'white' : '#1a1b27'};
   cursor: pointer;
   
   & > div {
@@ -18,7 +24,7 @@ const WrapperItem = styled.div`
   }
   
   img {
-    filter: opacity(0.2);
+    filter: opacity(${({ isActive }) => isActive ? '1' : '0.2'});
     margin-right: 0.8rem;
     transition: all 100ms ease-in-out;
   }

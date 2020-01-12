@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { Button } from '../Shared';
 
 const HeaderStyled = styled.header`
@@ -16,7 +17,9 @@ const Header = () => (
     <Link to="/">
       <img src="/images/logo.png" alt="Rubitify" width={100}/>
     </Link>
-    <Button type="button">Random</Button>
+    <Suspense fallback="Random">
+      <Button type="button">Random</Button>
+    </Suspense>
   </HeaderStyled>
 );
 

@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { fetchSongs, setCurrent } from '../store/songs/songsSlice';
+import Song from '../components/Song';
+import { AppDispatch } from '../store';
 import { RootState } from '../store/rootReducer';
-import { fetchSongs } from '../store/songs/songsSlice';
-import Song from "../components/Song";
 
 interface Params {
   albumId?: string;
 }
 
-function useSongs() {
-  const dispatch = useDispatch();
+function useSongs(dispatch: AppDispatch) {
   const history = useHistory();
   const { albumId = null } = useParams<Params>();
   const [loading, setLoading] = useState<boolean>(true);
   const songs = useSelector(
-    (state: RootState) => state.songs
+    (state: RootState) => state.songs.songs
   );
 
   useEffect(() => {
     async function init() {
       if (!albumId) history.push('/');
-      await dispatch(fetchSongs(albumId || 0));
+      dispatch(fetchSongs(albumId || 0));
       setLoading(false);
     }
     init();
@@ -32,14 +32,22 @@ function useSongs() {
 }
 
 const Songs = () => {
-  const { loading, songs } = useSongs();
+  const dispatch = useDispatch();
+  const { loading, songs } = useSongs(dispatch);
+  const setCurrentSong = useCallback(song => dispatch(setCurrent(song)), [dispatch]);
 
   return (
     <div>
       <h2>Songs ({loading ? '...' : songs.length})</h2>
       {loading && <div>Loading...</div>}
       {songs.map(song => (
-        <Song key={song.id} title={song.name} duration={song.duration_ms} url={song.spotify_url} />
+        <Song
+          key={song.id}
+          title={song.name}
+          duration={song.duration_ms}
+          url={song.spotify_url}
+          onClick={() => setCurrentSong(song)}
+        />
       ))}
     </div>
   );

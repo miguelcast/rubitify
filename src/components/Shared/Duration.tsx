@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { msToTime } from '../../utils/converters';
 
 const DurationStyled = styled.span`

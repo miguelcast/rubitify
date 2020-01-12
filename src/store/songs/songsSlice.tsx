@@ -12,22 +12,42 @@ export interface Song {
   explicit?: 't' | 'f'
 }
 
-const initialState: Song[] = [];
+interface InitialState {
+  songs: Song[];
+  current?: Song | null;
+}
+
+const initialState: InitialState = {
+  songs: [],
+  current: null
+};
 
 const songsSlice = createSlice({
   name: 'songs',
   initialState,
   reducers: {
     songsSuccess(state, action: PayloadAction<Song[]>) {
-      return action.payload;
+      return {
+        ...state,
+        songs: action.payload
+      };
     },
-    songsClear() {
-      return [];
+    songsClear(state) {
+      return {
+        ...state,
+        songs: []
+      };
+    },
+    setCurrent(state, action: PayloadAction<Song>) {
+      return {
+        ...state,
+        current: action.payload
+      }
     }
   }
 });
 
-export const { songsClear, songsSuccess } = songsSlice.actions;
+export const { songsClear, songsSuccess, setCurrent } = songsSlice.actions;
 
 export default songsSlice.reducer;
 
