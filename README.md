@@ -1,8 +1,10 @@
+#Rubitify
+
+Demo  https://rubitify.now.sh/
+
 Install dependencies for running in local
 
     yarn 
-  
-Demo  https://rubitify.now.sh/
 
 Run tests
 
