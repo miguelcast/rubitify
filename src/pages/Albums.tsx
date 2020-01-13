@@ -1,47 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { List } from '../components/Shared';
 import Card from '../components/Card';
-import { RootState } from '../store/rootReducer';
-import { fetchAlbums } from '../store/albums/albumsSlice';
+import { useCurrentArtist } from '../hooks/useCurrentArtist.hook';
+import { useAlbums } from '../hooks/useAlbums.hook';
 
 interface Params {
   artistId?: string;
 }
 
-function useAlbums() {
-  const dispatch = useDispatch();
+const Albums = () => {
   const history = useHistory();
   const { artistId = null } = useParams<Params>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const albums = useSelector(
-    (state: RootState) => state.albums
-  );
 
-  useEffect(() => {
-    async function init() {
-      if (!artistId) history.push('/');
-      await dispatch(fetchAlbums(artistId || 0));
-      setLoading(false);
-    }
-    init();
-  }, [artistId, dispatch, history]);
+  if (!artistId) history.push('/');
 
-  return { loading, albums };
-}
-
-const Albums = () => {
-  const { loading, albums } = useAlbums();
+  const { loading, albums } = useAlbums(artistId);
+  const artist = useCurrentArtist(artistId);
 
   return (
     <div>
-      <h2>Albums ({loading ? '...' : albums.length})</h2>
+      {artist && <Card noHover title={artist.name} image={artist.image} />}
+      <h2>Albums ({ loading ? '...' : albums.length })</h2>
       {loading && <div>Loading...</div>}
       <List>
         {albums.map(album => (
-          <Link key={album.id} to={`/album/${album.id}/songs`}>
+          <Link key={album.id} to={`/artist/${artistId}/album/${album.id}/songs`}>
             <Card
               title={album.name}
               image={album.image}

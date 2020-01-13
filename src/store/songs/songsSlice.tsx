@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { AppThunk } from '../index';
 import { albumSongs as albumSongsService } from '../../services';
+import { AppThunk } from '../index';
 
 export interface Song {
   id: number;

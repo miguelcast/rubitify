@@ -16,7 +16,7 @@ const routes = [
     exact: true
   },
   {
-    path: '/album/:albumId/songs',
+    path: '/artist/:artistId/album/:albumId/songs',
     component: Songs,
     exact: true
   }

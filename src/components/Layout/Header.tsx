@@ -1,8 +1,8 @@
-import React, { Suspense } from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button } from '../Shared';
+import Random from '../Random';
 
 const HeaderStyled = styled.header`
   display: flex;
@@ -17,10 +17,8 @@ const Header = () => (
     <Link to="/">
       <img src="/images/logo.png" alt="Rubitify" width={100}/>
     </Link>
-    <Suspense fallback="Random">
-      <Button type="button">Random</Button>
-    </Suspense>
+    <Random />
   </HeaderStyled>
 );
 
-export default Header;
+export default memo(Header);

@@ -8,11 +8,12 @@ interface Props {
   image: string;
   title: string;
   subtitle?: string;
+  noHover?: boolean;
 }
 
-const Card = ({ image, title, subtitle  }: Props) => {
+const Card = ({ image, title, subtitle, noHover = false  }: Props) => {
   return (
-    <WrapperCard role="button" tabIndex={0}>
+    <WrapperCard role="button" tabIndex={0} noHover={noHover}>
       <Suspense fallback={title}>
         <RoundImage
           src={image}
