@@ -1,7 +1,9 @@
-CLI for deploy
+Install dependencies for running in local
 
-now -A now.json --prod
+    yarn 
+  
+Demo  https://rubitify.now.sh/
 
-Url
+Run tests
 
-https://rubitify.now.sh/
+    yarn test
